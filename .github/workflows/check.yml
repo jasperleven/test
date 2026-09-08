@@ -1,0 +1,25 @@
+name: Check sales on date
+
+on:
+  workflow_dispatch:
+    inputs:
+      baer:
+        description: "Baer tag, e.g. BNS"
+        required: true
+      date:
+        description: "Date YYYY-MM-DD"
+        required: true
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install requests
+      - run: python check_sales_on_date.py --baer "${{ github.event.inputs.baer }}" --date "${{ github.event.inputs.date }}"
+        env:
+          AMO_BASE_URL: ${{ secrets.AMO_BASE_URL }}
+          AMO_TOKEN: ${{ secrets.AMO_TOKEN }}
