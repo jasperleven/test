@@ -85,7 +85,7 @@ def main():
         tags = [t.get("name", "").strip().lower() for t in (lead.get("_embedded") or {}).get("tags") or []]
         if args.baer.lower() in tags:
             matched.append((deal_id, lead.get("name")))
-        time.sleep(0.15)
+        time.sleep(0.5)
 
     print(f"\n{len(matched)} deal(s) tagged '{args.baer}' became a sale on {args.date}:")
     for deal_id, name in matched:
